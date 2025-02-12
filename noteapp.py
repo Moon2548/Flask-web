@@ -208,5 +208,20 @@ def delete_note(tag_id):  # ลบ Note เพียงอย่างเดี�
     return flask.redirect(flask.url_for("index"))
 
 
+@app.route("/tags/<tag_id>/delete", methods=["GET", "POST"])
+def delete(tag_id):  # ลบทั้งหมดที่เกี่ยวกับ Tags
+    db = models.db
+    notes = (
+        db.session.execute(
+            db.select(models.Note).where(models.Note.tags.any(id=tag_id))
+        )
+        .scalars()
+        .first()
+    )
+    db.session.delete(notes)
+    db.session.commit()
+    return flask.redirect(flask.url_for("index"))
+
+
 if __name__ == "__main__":
     app.run(debug=True)
