@@ -62,3 +62,10 @@ class Note(db.Model):
     tags: Mapped[list[Tag]] = relationship(secondary=note_tag_m2m)
     created_date = mapped_column(sa.DateTime(timezone=True), server_default=func.now())
     updated_date = mapped_column(sa.DateTime(timezone=True), server_default=func.now())
+
+
+class Role(db.Model):
+    __tablename__ = "roles"
+    id: Mapped[int] = mapped_column(sa.Integer, primary_key=True)
+    name: Mapped[str] = mapped_column(sa.String, nullable=False, default="user")
+    created_date = mapped_column(sa.DateTime(timezone=True), server_default=func.now())
