@@ -161,5 +161,36 @@ def create_note():
     return flask.redirect(flask.url_for("index"))
 
 
+@app.route("/tags/<tag_id>/update_note", methods=["GET", "POST"])
+def update_note(tag_id):  # แก้ไข Note และสามารถเปลี่ยนชื่อ Title ได้
+    db = models.db
+    notes = (
+        db.session.execute(
+            db.select(models.Note).where(models.Note.tags.any(id=tag_id))
+        )
+        .scalars()
+        .first()
+    )
+    form = forms.NoteForm()
+    form_title = notes.title
+    form_description = notes.description
+    if not form.validate_on_submit():
+        print(form.errors)
+        return flask.render_template(
+            "update_note.html",
+            form=form,
+            form_title=form_title,
+            form_description=form_description,
+        )
+
+    note = models.Note(id=tag_id)
+    form.populate_obj(note)
+    notes.description = form.description.data
+    notes.title = form.title.data
+    db.session.commit()
+
+    return flask.redirect(flask.url_for("index"))
+
+
 if __name__ == "__main__":
     app.run(debug=True)
