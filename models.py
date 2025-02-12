@@ -3,6 +3,12 @@ from flask_sqlalchemy import SQLAlchemy
 import sqlalchemy as sa
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
+from sqlalchemy.sql import func
+from sqlalchemy_serializer import SerializerMixin
+from sqlalchemy.ext.hybrid import hybrid_property
+from flask_bcrypt import Bcrypt
+from flask_login import UserMixin
+from acl import init_acl
 
 
 class Base(DeclarativeBase):
@@ -12,8 +18,13 @@ class Base(DeclarativeBase):
 db = SQLAlchemy(model_class=Base)
 
 
+bcrypt = Bcrypt()
+
+
 def init_app(app):
     db.init_app(app)
+    bcrypt.init_app(app)
+    init_acl(app)
     with app.app_context():
         db.create_all()
         db.reflect()
@@ -23,6 +34,14 @@ note_tag_m2m = db.Table(
     "note_tag",
     sa.Column("note_id", sa.ForeignKey("notes.id"), primary_key=True),
     sa.Column("tag_id", sa.ForeignKey("tags.id"), primary_key=True),
+)
+
+
+user_roles = db.Table(
+    "user_roles",
+    db.Model.metadata,
+    sa.Column("user_id", sa.ForeignKey("users.id"), primary_key=True),
+    sa.Column("role_id", sa.ForeignKey("roles.id"), primary_key=True),
 )
 
 
