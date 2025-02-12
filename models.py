@@ -69,3 +69,15 @@ class Role(db.Model):
     id: Mapped[int] = mapped_column(sa.Integer, primary_key=True)
     name: Mapped[str] = mapped_column(sa.String, nullable=False, default="user")
     created_date = mapped_column(sa.DateTime(timezone=True), server_default=func.now())
+
+
+class User(db.Model, UserMixin):
+    __tablename__ = "users"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    username = db.Column(db.String)
+    status = db.Column(db.String, default="active")
+    _password_hash = db.Column(db.String)
+    created_date = mapped_column(sa.DateTime(timezone=True), server_default=func.now())
+    updated_date = mapped_column(sa.DateTime(timezone=True), server_default=func.now())
+    roles: Mapped[list[Role]] = relationship(secondary=user_roles)
