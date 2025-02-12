@@ -192,5 +192,21 @@ def update_note(tag_id):  # แก้ไข Note และสามารถเ�
     return flask.redirect(flask.url_for("index"))
 
 
+@app.route("/tags/<tag_id>/delete_note", methods=["GET", "POST"])
+def delete_note(tag_id):  # ลบ Note เพียงอย่างเดียวไม่ได้ลบ Title
+    db = models.db
+    notes = (
+        db.session.execute(
+            db.select(models.Note).where(models.Note.tags.any(id=tag_id))
+        )
+        .scalars()
+        .first()
+    )
+    notes.description = ""
+    db.session.commit()
+
+    return flask.redirect(flask.url_for("index"))
+
+
 if __name__ == "__main__":
     app.run(debug=True)
