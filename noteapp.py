@@ -72,5 +72,23 @@ def register():
     return flask.redirect(flask.url_for("index"))
 
 
+@app.route("/tags/<tag_name>")
+def tags_view(tag_name):
+    db = models.db
+    tag = (
+        db.session.execute(db.select(models.Tag).where(models.Tag.name == tag_name))
+        .scalars()
+        .first()
+    )
+    notes = db.session.execute(
+        db.select(models.Note).where(models.Note.tags.any(id=tag.id))
+    ).scalars()
+    return flask.render_template(
+        "tags_view.html",
+        tag_name=tag_name,
+        notes=notes,
+    )
+
+
 if __name__ == "__main__":
     app.run(debug=True)
