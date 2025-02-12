@@ -90,5 +90,28 @@ def tags_view(tag_name):
     )
 
 
+@app.route("/tags/<tag_id>/update_tags", methods=["GET", "POST"])
+def update_tags(tag_id):  # แก้ไข Tags ได้
+    db = models.db
+    tag = (
+        db.session.execute(db.select(models.Tag).where(models.Tag.id == tag_id))
+        .scalars()
+        .first()
+    )
+    form = forms.TagsForm()
+    form_name = tag.name
+
+    if not form.validate_on_submit():
+        print(form.errors)
+        return flask.render_template("update_tags.html", form=form, form_name=form_name)
+
+    note = models.Note(id=tag_id)
+    form.populate_obj(note)
+    tag.name = form.name.data
+    db.session.commit()
+
+    return flask.redirect(flask.url_for("index"))
+
+
 if __name__ == "__main__":
     app.run(debug=True)
