@@ -1,6 +1,6 @@
 from wtforms_sqlalchemy.orm import model_form
 from flask_wtf import FlaskForm
-from wtforms import Field, widgets
+from wtforms import Field, widgets, validators, fields
 import models
 
 
@@ -43,6 +43,12 @@ BaseTagsForm = model_form(
     exclude=["created_date", "updated_date"],
     db_session=models.db.session,
 )
+BaseUserForm = model_form(
+    models.User,
+    base_class=FlaskForm,
+    exclude=["created_date", "updated_date", "status", "_password_hash"],
+    db_session=models.db.session,
+)
 
 
 class NoteForm(BaseNoteForm):
@@ -51,3 +57,20 @@ class NoteForm(BaseNoteForm):
 
 class TagsForm(BaseTagsForm):
     tags = TagListField("Tag")
+
+
+class LoginForm(FlaskForm):
+    username = fields.StringField("username", [validators.DataRequired()])
+    password = fields.PasswordField("password", [validators.DataRequired()])
+
+
+class RegisterForm(BaseUserForm):
+    username = fields.StringField(
+        "username", [validators.DataRequired(), validators.length(min=6)]
+    )
+    password = fields.PasswordField(
+        "password", [validators.DataRequired(), validators.length(min=6)]
+    )
+    name = fields.StringField(
+        "name", [validators.DataRequired(), validators.length(min=6)]
+    )
