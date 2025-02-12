@@ -128,5 +128,38 @@ def delete_tags(tag_id):  # ลบ Tags ได้อย่างเดียว
     return flask.redirect(flask.url_for("index"))
 
 
+@app.route("/notes/create_note", methods=["GET", "POST"])
+def create_note():
+    form = forms.NoteForm()
+    if not form.validate_on_submit():
+        print("error", form.errors)
+        return flask.render_template(
+            "create_note.html",
+            form=form,
+        )
+    note = models.Note()
+    form.populate_obj(note)
+    note.tags = []
+
+    db = models.db
+    for tag_name in form.tags.data:
+        tag = (
+            db.session.execute(db.select(models.Tag).where(models.Tag.name == tag_name))
+            .scalars()
+            .first()
+        )
+
+        if not tag:
+            tag = models.Tag(name=tag_name)
+            db.session.add(tag)
+
+        note.tags.append(tag)
+
+    db.session.add(note)
+    db.session.commit()
+
+    return flask.redirect(flask.url_for("index"))
+
+
 if __name__ == "__main__":
     app.run(debug=True)
