@@ -100,3 +100,6 @@ class User(db.Model, UserMixin):
     # this prevents that Exception being raised everytime we try to call the
     # .to_dict() method in a request that returns information from users
     serialize_rules = ("-_password_hash",)
+
+    def has_role(self, role_name):
+        return any(role.name == role_name for role in self.roles)
