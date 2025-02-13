@@ -23,6 +23,18 @@ def index():
     )
 
 
+@app.route("/home")
+def home():
+    db = models.db
+    notes = db.session.execute(
+        db.select(models.Note).order_by(models.Note.title)
+    ).scalars()
+    return flask.render_template(
+        "home.html",
+        notes=notes,
+    )
+
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     form = forms.LoginForm()
@@ -35,7 +47,7 @@ def login():
 
     if user and user.authenticate(form.password.data):
         login_user(user)
-        return flask.redirect(flask.url_for("index"))
+        return flask.redirect(flask.url_for("home"))
 
     return flask.redirect(flask.url_for("login", error="Invalid username or password"))
 
@@ -69,7 +81,7 @@ def register():
     models.db.session.add(user)
     models.db.session.commit()
 
-    return flask.redirect(flask.url_for("index"))
+    return flask.redirect(flask.url_for("home"))
 
 
 @app.route("/tags/<tag_name>")
@@ -110,7 +122,7 @@ def update_tags(tag_id):  # แก้ไข Tags ได้
     tag.name = form.name.data
     db.session.commit()
 
-    return flask.redirect(flask.url_for("index"))
+    return flask.redirect(flask.url_for("home"))
 
 
 @app.route("/tags/<tag_id>/delete_tags", methods=["GET", "POST"])
@@ -125,7 +137,7 @@ def delete_tags(tag_id):  # ลบ Tags ได้อย่างเดียว
     tag.name = ""
     db.session.commit()
 
-    return flask.redirect(flask.url_for("index"))
+    return flask.redirect(flask.url_for("home"))
 
 
 @app.route("/notes/create_note", methods=["GET", "POST"])
@@ -158,7 +170,7 @@ def create_note():
     db.session.add(note)
     db.session.commit()
 
-    return flask.redirect(flask.url_for("index"))
+    return flask.redirect(flask.url_for("home"))
 
 
 @app.route("/tags/<tag_id>/update_note", methods=["GET", "POST"])
@@ -189,7 +201,7 @@ def update_note(tag_id):  # แก้ไข Note และสามารถเ�
     notes.title = form.title.data
     db.session.commit()
 
-    return flask.redirect(flask.url_for("index"))
+    return flask.redirect(flask.url_for("home"))
 
 
 @app.route("/tags/<tag_id>/delete_note", methods=["GET", "POST"])
@@ -205,7 +217,7 @@ def delete_note(tag_id):  # ลบ Note เพียงอย่างเดี�
     notes.description = ""
     db.session.commit()
 
-    return flask.redirect(flask.url_for("index"))
+    return flask.redirect(flask.url_for("home"))
 
 
 @app.route("/tags/<tag_id>/delete", methods=["GET", "POST"])
@@ -220,7 +232,7 @@ def delete(tag_id):  # ลบทั้งหมดที่เกี่ยวก
     )
     db.session.delete(notes)
     db.session.commit()
-    return flask.redirect(flask.url_for("index"))
+    return flask.redirect(flask.url_for("home"))
 
 
 if __name__ == "__main__":
