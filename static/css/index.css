@@ -1,0 +1,24 @@
+header {
+    background-color: black;
+    top: 0;
+    width: 100%;
+}
+
+h1 {
+    color: white;
+    width: 20ch;
+    font-family: monospace;
+    text-wrap: nowrap;
+    overflow: hidden;
+    animation: typing 2s steps(20) infinite alternate-reverse;
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 20ch;
+    }
+}
