@@ -81,3 +81,36 @@ button {
     z-index: -1;
     transition: all 0.25s ease;
 }
+
+.btn-2:hover {
+    color: gold;
+}
+
+.btn-2:hover::before {
+    transform: translate(-5px, -5px);
+    border: 3px solid blue;
+    background-color: cyan;
+    opacity: 0.5;
+    z-index: -1;
+}
+
+.btn-2:hover::after {
+    transform: translate(5px, 5px);
+    border: 3px solid red;
+    background-color: pink;
+    opacity: 0.5;
+    z-index: -1;
+}
+
+.btn-2::after,
+.btn-2::before {
+    content: "";
+    border: 3px solid black;
+    position: absolute;
+    border-radius: inherit;
+    width: calc(100% - 6px);
+    height: calc(100% - 6px);
+    left: 0;
+    bottom: 0;
+    transition: all 0.25s ease;
+}
