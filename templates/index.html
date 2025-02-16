@@ -10,8 +10,13 @@
             <h1>Flask Web</h1>
         </div>
     </header>
-    <button class="btn-1" onclick="location.href='{{ url_for('login') }}'">Login</button>
-    <button class="btn-2" onclick="location.href='{{ url_for('register') }}'">Register</button>
-    <button class="btn-3" onclick="location.href='{{ url_for('home') }}'">Home</button>
+    <div align="center">
+        {% if not current_user.is_authenticated %}
+        <button class="btn-1" onclick="location.href='{{ url_for('login') }}'">Login</button>
+        <button class="btn-2" onclick="location.href='{{ url_for('register') }}'">Register</button>
+        {% else %}
+        <button class="btn-3" onclick="location.href='{{ url_for('home') }}'">Home</button>
+        {% endif %}
+    </div>
 </body>
 {% endblock %}
