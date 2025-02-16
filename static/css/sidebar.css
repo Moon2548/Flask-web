@@ -1,0 +1,13 @@
+h1 {
+  padding: 6px 8px 6px 16px;
+  font-size: 25px;
+  color: white;
+  border-radius: 30px;
+  display: block;
+  transition: all 0.25s ease;
+}
+
+h1:hover {
+  background-color: rgb(58, 58, 58);
+  transform: translate(0, -6px);
+}

@@ -83,7 +83,7 @@ button {
 }
 
 .btn-2:hover {
-    color: gold;
+    color: darkgoldenrod;
 }
 
 .btn-2:hover::before {
