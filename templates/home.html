@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
 {% block body %}
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+</head>
+
 <ul class="nav justify-content-center" style="padding-top: 1em;">
     <li class="nav-item">
-        <a class="btn btn-primary" href="{{ url_for('create_note')
-}}">Create</a>
+        <button class="note" onclick="location.href='{{ url_for('create_note') }}'">Create Note</button>
     </li>
 </ul>
 {% for note in notes %}
