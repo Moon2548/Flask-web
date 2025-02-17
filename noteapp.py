@@ -235,5 +235,17 @@ def delete(tag_id):  # ลบทั้งหมดที่เกี่ยวก
     return flask.redirect(flask.url_for("home"))
 
 
+@app.route("/profile")
+def profile():
+    db = models.db
+    user = db.session.execute(
+        db.select(models.User).order_by(models.User.name)
+    ).scalars()
+    return flask.render_template(
+        "profile.html",
+        user=user,
+    )
+
+
 if __name__ == "__main__":
     app.run(debug=True)

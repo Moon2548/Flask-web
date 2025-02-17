@@ -1,0 +1,12 @@
+{% extends 'sidebar.html' %}
+{% block body %}
+
+<div>
+    {% if current_user.is_authenticated %}
+    <h2>Profile, {{ current_user.name }}</h2>
+    {% elif not current_user.is_authenticated %}
+    <h2>Log in to view profile</h2>
+    {% endif %}
+</div>
+
+{% endblock %}

@@ -11,6 +11,9 @@
     {% if not request.path == '/home' %}
     <button class="sbtn-1" onclick="location.href='{{ url_for('home') }}'">Home</button>
     {% endif %}
+    {% if not request.path == '/profile' %}
+    <button class="sbtn-1" onclick="location.href='{{ url_for('profile') }}'">Profile</button>
+    {% endif %}
 </body>
 
 {% endblock %}
