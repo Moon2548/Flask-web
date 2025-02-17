@@ -11,3 +11,20 @@ h1:hover {
   background-color: rgb(58, 58, 58);
   transform: translate(0, -6px);
 }
+
+.sbtn-1 {
+  font-size: 20px;
+  cursor: pointer;
+  border: 0px;
+  padding: 10px 20px;
+  background: transparent;
+  position: relative;
+  margin: 20px;
+  color: white;
+  border-radius: 30px;
+  transition: all 0.25s ease;
+}
+
+.sbtn-1:hover {
+  background-color: rgb(58, 58, 58);
+}
