@@ -8,7 +8,9 @@
 
 <body>
     <h1 style="color: white;">Flask Web</h1>
+    {% if not request.path == '/home' %}
     <button class="sbtn-1" onclick="location.href='{{ url_for('home') }}'">Home</button>
+    {% endif %}
 </body>
 
 {% endblock %}
