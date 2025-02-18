@@ -19,7 +19,7 @@ h1:hover {
   padding: 10px 20px;
   background: transparent;
   position: relative;
-  margin: 20px;
+  margin: 0px;
   color: white;
   border-radius: 30px;
   transition: all 0.25s ease;

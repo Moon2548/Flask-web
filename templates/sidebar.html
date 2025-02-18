@@ -14,6 +14,9 @@
     {% if not request.path == '/profile' %}
     <button class="sbtn-1" onclick="location.href='{{ url_for('profile') }}'">Profile</button>
     {% endif %}
+    {% if not request.path == '/logout' and current_user.is_authenticated %}
+    <button class="sbtn-1" onclick="location.href='{{ url_for('logout') }}'">Logout</button>
+    {% endif %}
 </body>
 
 {% endblock %}
