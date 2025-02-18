@@ -16,6 +16,7 @@
         <button class="btn-2" onclick="location.href='{{ url_for('register') }}'">Register</button>
         {% else %}
         <button class="btn-3" onclick="location.href='{{ url_for('home') }}'">Home</button>
+        <button class="btn-4" onclick="location.href='{{ url_for('logout') }}'">Logout</button>
         {% endif %}
     </div>
 </body>

@@ -56,7 +56,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return flask.redirect(flask.url_for("login"))
+    return flask.redirect(flask.url_for("index"))
 
 
 @app.route("/register", methods=["GET", "POST"])
