@@ -1,0 +1,14 @@
+{% extends 'sidebar.html' %}
+{% block body %}
+
+<div>
+    {% for user in users %}
+    <div class="card my-3">
+        <div class="card-body">
+            <h5 class="card-title">{{ user.name }}</h5>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
