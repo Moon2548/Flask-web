@@ -11,6 +11,9 @@
     {% if not request.path == '/home' %}
     <button class="sbtn-1" onclick="location.href='{{ url_for('home') }}'">Home</button>
     {% endif %}
+    {% if not request.path == '/admin' and current_user.has_role("admin") %}
+    <button class="sbtn-1" onclick="location.href='{{ url_for('admin') }}'">Admin</button>
+    {% endif %}
     {% if not request.path == '/people' %}
     <button class="sbtn-1" onclick="location.href='{{ url_for('people') }}'">People</button>
     {% endif %}
