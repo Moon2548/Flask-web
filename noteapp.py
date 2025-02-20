@@ -259,5 +259,17 @@ def people():
     )
 
 
+@app.route("/admin")
+def admin():
+    db = models.db
+    users = db.session.execute(
+        db.select(models.User).order_by(models.User.name)
+    ).scalars()
+    return flask.render_template(
+        "admin.html",
+        users=users,
+    )
+
+
 if __name__ == "__main__":
     app.run(debug=True)
