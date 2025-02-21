@@ -247,14 +247,14 @@ def profile():
     )
 
 
-@app.route("/people")
-def people():
+@app.route("/accounts")
+def accounts():
     db = models.db
     users = db.session.execute(
         db.select(models.User).order_by(models.User.name)
     ).scalars()
     return flask.render_template(
-        "people.html",
+        "accounts.html",
         users=users,
     )
 
