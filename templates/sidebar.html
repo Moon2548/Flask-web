@@ -15,7 +15,7 @@
     <button class="sbtn-1" onclick="location.href='{{ url_for('admin') }}'">Admin</button>
     {% endif %}
     {% if not request.path == '/people' %}
-    <button class="sbtn-1" onclick="location.href='{{ url_for('people') }}'">People</button>
+    <button class="sbtn-1" onclick="location.href='{{ url_for('accounts') }}'">Account</button>
     {% endif %}
     {% if not request.path == '/profile' %}
     <button class="sbtn-1" onclick="location.href='{{ url_for('profile') }}'">Profile</button>
