@@ -81,7 +81,7 @@ def register():
     models.db.session.add(user)
     models.db.session.commit()
 
-    return flask.redirect(flask.url_for("home"))
+    return flask.redirect(flask.url_for("index"))
 
 
 @app.route("/tags/<tag_name>")
@@ -269,6 +269,19 @@ def admin():
         "admin.html",
         users=users,
     )
+
+
+@app.route("/admin/<user_id>/user_delete", methods=["GET", "POST"])
+def user_delete(user_id):  # ลบทั้งหมดที่เกี่ยวกับ Users
+    db = models.db
+    users = (
+        db.session.execute(db.select(models.User).where(models.User.id == user_id))
+        .scalars()
+        .first()
+    )
+    db.session.delete(users)
+    db.session.commit()
+    return flask.redirect(flask.url_for("admin"))
 
 
 if __name__ == "__main__":

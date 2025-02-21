@@ -20,11 +20,13 @@
         </div>
     </nav>
 
+    {% if not request.path == '/register' and not request.path == '/login' %}
     <div class="sidenav">
         {% block sidebar %}
         defualt sidebar
         {% endblock %}
     </div>
+    {% endif %}
     <div class="main">
         {% block body %}
         Defualt template
