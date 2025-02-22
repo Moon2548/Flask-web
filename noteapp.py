@@ -3,7 +3,7 @@ import models
 import forms
 import acl
 
-from flask_login import login_required, login_user, logout_user
+from flask_login import login_required, login_user, logout_user, current_user
 
 app = flask.Flask(__name__)
 app.config["SECRET_KEY"] = "This is secret key"
@@ -167,6 +167,7 @@ def create_note():
 
         note.tags.append(tag)
 
+    note.user_id = current_user.id
     db.session.add(note)
     db.session.commit()
 
