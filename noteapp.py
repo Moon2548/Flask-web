@@ -167,7 +167,6 @@ def create_note():
 
         note.tags.append(tag)
 
-    note.user_id = current_user.id
     db.session.add(note)
     db.session.commit()
 
