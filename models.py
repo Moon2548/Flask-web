@@ -60,7 +60,6 @@ class Note(db.Model):
     title: Mapped[str] = mapped_column(sa.String, nullable=False)
     description: Mapped[str] = mapped_column(sa.Text)
     tags: Mapped[list[Tag]] = relationship(secondary=note_tag_m2m)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     created_date = mapped_column(sa.DateTime(timezone=True), server_default=func.now())
     updated_date = mapped_column(sa.DateTime(timezone=True), server_default=func.now())
 
