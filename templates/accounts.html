@@ -5,7 +5,10 @@
     {% for user in users %}
     <div class="card my-3">
         <div class="card-body">
-            <h5 class="card-title">{{ user.name }}</h5>
+            <h3 class="card-title">{{ user.name }}</h3>
+            {% for r in user.roles %}
+            <h5 class="card-title">Role: {{ r.name }}</h5>
+            {% endfor %}
         </div>
     </div>
     {% endfor %}
